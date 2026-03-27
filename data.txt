@@ -1,0 +1,2 @@
+Hello! This is Node.js file handling.
+Appended line.
