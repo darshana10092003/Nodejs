@@ -43,9 +43,10 @@ app.use(express.json());
 //     {id:2,name:"suresh", age:24}
 // ];
 
-app.get('/user/:name', (req,res,next)=>{
+app.get('/user/:id/:name', (req,res,next)=>{
    const name=req.params.name;
-   res.send(`hello ${name}`);
+   const id=req.params.id;
+   res.send(`hello User id is ${id} and name is ${name}`);
 });
 
 
@@ -57,13 +58,28 @@ app.get('/user', (req,res)=>{
 
 //custom error
 
-app.get("/", (req, res) => {
-  throw new Error("Something went wrong!");
+// app.get("/", (req, res) => {
+//   throw new Error("Something went wrong!");
+// });
+
+// app.use((err, req, res, next)=>{
+//     console.log(err);
+//     res.status(500).json({message:"Oops! something went wrong"});
+// });
+
+// function errorHandler(err,req,res,next){
+//     res.status(500).send("Something went wrong!!");
+// }
+
+// app.use(errorHandler);
+app.get('/test',(req,res,next)=>{
+    next(new Error("oops!"));
 });
 
-app.use((err, req, res, next)=>{
-    console.log(err);
-    res.status(500).json({message:"Oops! something went wrong"});
+
+app.use((err,req,res,next)=>{
+ console.log(err);
+ res.status(500).send("Something went wrong");
 });
 
 app.listen(4000,()=>{
