@@ -1,5 +1,5 @@
-const express=require ('express');
-const app=express();
+// const express=require ('express');
+// const app=express();
 
 
 //without middleware
@@ -44,19 +44,43 @@ const app=express();
 // })
 
 
-function checkLogin(req,res,next){
-    const isLoggedIn=false;
+// function checkLogin(req,res,next){
+//     const isLoggedIn=false;
 
-    if(!isLoggedIn){
-        return res.send("please login first");
-    }
+//     if(!isLoggedIn){
+//         return res.send("please login first");
+//     }
+//     next();
+// }
+
+// app.get('/dashboard',checkLogin,(req,res)=>{
+//      res.send("welcome to dashboard");
+// })
+
+// app.listen(4001,()=>{
+//     console.log("server is running on port 4001");
+// })
+
+
+// module.exports=function(req,res,next){
+//     const timestamp=new Date().toISOString();
+//     console.log(`[${timestamp}] ${req.method} ${req.url}`);
+//     next();
+// }
+
+const express=require('express');
+const app=express();
+
+//CUSTOM MIDDLEWARE
+const myMiddleware=(req,res,next)=>{
+    console.log("custom myMiddleware executed");
     next();
 }
 
-app.get('/dashboard',checkLogin,(req,res)=>{
-     res.send("welcome to dashboard");
+app.use(myMiddleware);
+
+app.get('/',(req,res)=>{
+    res.send("home page");
 })
 
-app.listen(4001,()=>{
-    console.log("server is running on port 4001");
-})
+app.listen(3000);
